@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>NY Job Board</title>
     <meta name="description" content="demo page">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <style>
@@ -13,12 +14,82 @@
     margin-left: auto;
     margin-right: auto;
 	}
-#content {width:500px;}
-.pagination {list-style:none; margin:10px 0px 0px 0px; padding:0px; clear:both;}
+
+/*.pagination {list-style:none; margin:20px 0px 0px 10px; padding:0px; clear:both;}
 .pagination li{float:left; margin:3px;}
-.pagination li a{   display:block; padding:3px 5px; color:#fff; background-color:#44b0dd; text-decoration:none;}
+.pagination li a{display:block; padding:3px 5px; color:#fff; background-color:#44b0dd; text-decoration:none;}
 .pagination li a.active {border:1px solid #000; color:#000; background-color:#fff;}
-.pagination li a.inactive {background-color:#eee; color:#777; border:1px solid #ccc;}
+.pagination li a.inactive {background-color:#eee; color:#777; border:1px solid #ccc;}*/
+.pagination {
+  height: 36px;
+  margin: 10px 0;
+}
+
+.pagination ul {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  margin-left: 0;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.pagination li {
+  display: inline;
+}
+
+.pagination a {
+  float: left;
+  padding: 0 14px;
+  line-height: 34px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-left-width: 0;
+}
+
+.pagination a:hover,
+.pagination .active a {
+  background-color: #f5f5f5;
+}
+
+.pagination .active a {
+  color: #999999;
+  cursor: default;
+}
+
+.pagination .disabled span,
+.pagination .disabled a,
+.pagination .disabled a:hover {
+  color: #999999;
+  cursor: default;
+  background-color: transparent;
+}
+
+.pagination li:first-child a {
+  border-left-width: 1px;
+  -webkit-border-radius: 3px 0 0 3px;
+     -moz-border-radius: 3px 0 0 3px;
+          border-radius: 3px 0 0 3px;
+}
+
+.pagination li:last-child a {
+  -webkit-border-radius: 0 3px 3px 0;
+     -moz-border-radius: 0 3px 3px 0;
+          border-radius: 0 3px 3px 0;
+}
+
+.pagination-centered {
+  text-align: center;
+}
+
+.pagination-right {
+  text-align: right;
+}
 </style>
 	
 <body>
@@ -37,7 +108,7 @@
 	</div>
 	<br />
 	<div class="container">
-		<table id="job_table" class="table table-striped">
+		<table class="table table-striped">
 			<!-- <thead>
 	          	<tr >
 					<td>Date Posted</td>
@@ -165,12 +236,17 @@
 		</table>
 	</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
+<script src="jquery.js"></script>
 <script src="jPaginate.js"></script>
+<script src="jPaginatetable.js"></script>
+
 <script>
-$(document).ready(function(){
-    $(".content").jPaginate();                       
-});
+	$(document).ready(function(){
+	    //$(".content").jPaginate({items: 6});
+	    $('.table').jPaginatetable({items: 6});
+	});
 </script>
+
 </body>
 </html>

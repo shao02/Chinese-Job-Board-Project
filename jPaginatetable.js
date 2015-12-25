@@ -1,33 +1,44 @@
-// jPaginate Plugin for jQuery - Version 0.3
-// by Angel Grablev for Enavu Web Development network (enavu.com)
-// Dual license under MIT and GPL :) enjoy
-/*
-
-To use simply call .paginate() on the element you wish like so:
-$("#content").jPaginate(); 
-
-you can specify the following options:
-items = number of items to have per page on pagination
-next = the text you want to have inside the text button
-previous = the text you want in the previous button
-active = the class you want the active paginaiton link to have
-pagination_class = the class of the pagination element that is being generated for you to style
-minimize = minimizing will limit the overall number of elements in the pagination links
-nav_items = when minimize is set to true you can specify how many items to show
-cookies = if you want to use cookies to remember which page the user is on, true by default
-position = specify the position of the pagination, possible options: "before", "after", or "both"
-equal = implements an equal height main element by using the highest possible element use true false
-offset = unfortunately calculating heights with javascript isn't always 100% accurate, so please use this value to make it perfect :) its defaultly set to 50
-
+/**
+ * jPaginatetable Plugin for jQuery use with twitter bootstrap css 
+ * Based on jPaginate by Angel Grablev for Enavu Web Development network (enavu.com)
+ * @version 1.0
+ * @author Mario Trombino
+ * @email trombino.mario@gmail.com
+ * @license Dual license under MIT and GPL
+ * @homepage http://www.checkmates.altervista.org
+ * @date 13/06/2012
+ * @usage $('table').jPaginatetable()
 */
+
+/** jPaginate Plugin for jQuery - Version 0.3
+ * by Angel Grablev for Enavu Web Development network (enavu.com)
+ * Dual license under MIT and GPL :) enjoy
+ * To use simply call .paginate() on the element you wish like so:
+ * $("div").jPaginate();
+ * you can specify the following options:
+ * items = number of items to have per page on pagination
+ * next = the text you want to have inside the text button
+ * previous = the text you want in the previous button
+ * active = the class you want the active paginaiton link to have
+ * pagination_class = the class of the pagination element that is being generated for you to style
+ * minimize = minimizing will limit the overall number of elements in the pagination links
+ * nav_items = when minimize is set to true you can specify how many items to show
+ * cookies = if you want to use cookies to remember which page the user is on, true by default
+ * position = specify the position of the pagination, possible options: "before", "after", or "both"
+ * equal = implements an equal height main element by using the highest possible element use true false
+ * offset = unfortunately calculating heights with javascript isn't always 100% accurate, so please use this value to make it perfect :) its defaultly set to 50
+ * pagination_pos = Option for position pagination. Alternative: pagination-right.
+*/
+
 (function($){
-    $.fn.jPaginate = function(options) {
+    $.fn.jPaginatetable = function(options) {
         var defaults = {
             items: 4,
-            next: "Next",
-            previous: "Previous",
+            next: ">>",
+            previous: "<<",
             active: "active",
-            pagination_class: "pagination",
+            pagination_class: "pagination", // Use class twitter bootstrap css.
+            pagination_pos: "pagination-centered", // Option for position pagination. Alternative: pagination-right.
             minimize: false,
             nav_items: 6,
 			cookies: false,
@@ -39,7 +50,7 @@ offset = unfortunately calculating heights with javascript isn't always 100% acc
 
         return this.each(function() {
             // object is the selected pagination element list
-            obj = $(this);
+            obj = $(this).children('tbody');
             // this is how you call the option passed in by plugin of items
             var show_per_page = options.items;
             //getting the amount of elements inside parent element
@@ -99,34 +110,35 @@ offset = unfortunately calculating heights with javascript isn't always 100% acc
             // create the navigation for the pagination 
             function createPagination(curr) {
                 var start, items = "", end, nav = "";
-                start = "<ul class='"+options.pagination_class+"'>";
+                start = "<div class='"+options.pagination_class+" "+options.pagination_pos+"'><ul>";
                 var previous = "<li><a class='goto_previous' href='#'>"+options.previous+"</a></li>";
                 var next = "<li><a class='goto_next' href='#'>"+options.next+"</a></li>";
-				var previous_inactive = "<li><a class='inactive'>"+options.previous+"</a></li>";
-                var next_inactive = "<li><a class='inactive'>"+options.next+"</a></li>";
-                end = "</ul><br clear='all' />"
-                var after = number_of_pages - options.after + 1;
+				var previous_inactive = "<li class='disabled'><a class='inactive'>"+options.previous+"</a></li>";
+                var next_inactive = "<li class='disabled'><a class='inactive'>"+options.next+"</a></li>";
+                end = "</ul></div>";
+                //var after = number_of_pages - options.after + 1;
                 var pagi_range = paginationCalculator(curr);
+                var i;
 				for (i=1;i<=number_of_pages;i++)
                 {
                     if (options.minimize == true) {
-						var half = Math.ceil(number_of_pages/2)
+						var half = Math.ceil(number_of_pages/2);
                     	if (i >= pagi_range.start && i <= pagi_range.end) {
-							if (i == curr) { items += '<li><a class="'+options.active+'" title="'+i+'">'+i+'</a></li>';} 
+							if (i == curr) { items += '<li class="'+options.active+'"><a title="'+i+'">'+i+'</a></li>';} 
                         	else { items += '<li><a href="#" class="goto" title="'+i+'">'+i+'</a></li>';}
 						} else if (curr <= half) {
 							if (i >= (number_of_pages - 2)) {
-								if (i == curr) { items += '<li><a class="'+options.active+'" title="'+i+'">'+i+'</a></li>';} 
+								if (i == curr) { items += '<li class="'+options.active+'"><a title="'+i+'">'+i+'</a></li>';} 
                         		else { items += '<li><a href="#" class="goto" title="'+i+'">'+i+'</a></li>';}
 							} 
 						} else if (curr >= half) {
 							if (i <= 2) {
-								if (i == curr) { items += '<li><a class="'+options.active+'" title="'+i+'">'+i+'</a></li>';} 
+								if (i == curr) { items += '<li class="'+options.active+'"><a title="'+i+'">'+i+'</a></li>';} 
                         		else { items += '<li><a href="#" class="goto" title="'+i+'">'+i+'</a></li>';}
 							}
 						}
                     } else {
-                        if (i == curr) { items += '<li><a class="'+options.active+'" title="'+i+'">'+i+'</a></li>';} 
+                        if (i == curr) { items += '<li class="'+options.active+'"><a title="'+i+'">'+i+'</a></li>';} 
                         else { items += '<li><a href="#" class="goto" title="'+i+'">'+i+'</a></li>';}
                     }
                 }
@@ -140,12 +152,12 @@ offset = unfortunately calculating heights with javascript isn't always 100% acc
                     nav = start + previous_inactive + items + next + end;
                 }
 				if (options.position == "before") {
-					obj.before(nav);
+					$('table').parent().prepend(nav);
 				} else if (options.position == "after") {
-					obj.after(nav);
+					$('table').parent().append(nav);
 				} else {
-					obj.after(nav);
-					obj.before(nav)
+					$('table').parent().append(nav);
+					$('table').parent().prepend(nav);
 				}
                 
             }
@@ -185,7 +197,7 @@ offset = unfortunately calculating heights with javascript isn't always 100% acc
             $(".goto_next").live("click", function(e) {
                 e.preventDefault();
                 var act = "."+options.active;
-                var newcurr = parseInt($(".pagination").find(".active").attr("title")) + 1;
+                var newcurr = parseInt($(".pagination").find(act+" > a").attr("title")) + 1;
                 set_cookie( "current", newcurr);
 				showPage(newcurr);
                 $(".pagination").remove();
@@ -194,14 +206,12 @@ offset = unfortunately calculating heights with javascript isn't always 100% acc
             $(".goto_previous").live("click", function(e) {
                 e.preventDefault();
                 var act = "."+options.active;
-                var newcurr = parseInt($(".pagination").find(".active").attr("title")) - 1;
+                var newcurr = parseInt($(".pagination").find(act+" > a").attr("title")) - 1;
 				set_cookie( "current", newcurr);
                 showPage(newcurr);
                 $(".pagination").remove();
                 createPagination(newcurr);
             });
         });
-        
-       
     };
 })(jQuery);
