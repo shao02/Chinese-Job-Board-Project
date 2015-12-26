@@ -9,6 +9,7 @@ import com.chinese.jobs.model.Job;
 
 import java.util.List;
 
+
 @Controller
 public class JobController {
 	private static JobsLoader jobsLoader = new JobsLoader();
