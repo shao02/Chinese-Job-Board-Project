@@ -10,12 +10,16 @@ public class Job {
 	private final Date datePost;
 	private final String contact;
 	private final String location;
+	private final String id;
+	private final String details;
 
-	public Job(String jobName, Date datePost, String contact,String location) {
+	public Job(String jobName, Date datePost, String contact,String details,String location,String id) {
 		this.jobName = jobName;
 		this.datePost = datePost;
 		this.contact = contact;
 		this.location = location;
+		this.id = id;
+		this.details = details;
 	}
 
 	public String getJobName() {
@@ -34,6 +38,14 @@ public class Job {
 		return location;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
 	@Override
 	public String toString() {
 		return "Job{" +
@@ -41,6 +53,7 @@ public class Job {
 				", datePost=" + dateFormat.format(datePost) +
 				", contact='" + contact + '\'' +
 				", location='" + location + '\'' +
+				", id='" + id + '\'' +
 				'}';
 	}
 }
