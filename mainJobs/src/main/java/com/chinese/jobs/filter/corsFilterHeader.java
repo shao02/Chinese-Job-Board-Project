@@ -17,8 +17,9 @@ public class corsFilterHeader implements Filter{
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if ( "OPTIONS".equals(((HttpServletRequest) servletRequest).getMethod()) ||
-                "GET".equals(((HttpServletRequest) servletRequest).getMethod())) {
-            ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost/");
+                "GET".equals(((HttpServletRequest) servletRequest).getMethod())
+                || "POST".equals(((HttpServletRequest) servletRequest).getMethod())) {
+            ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost");
             ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
             ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "Content-Type");
             ((HttpServletResponse) servletResponse).addHeader("Access-Control-Max-Age", "1800");//30 min
