@@ -1,5 +1,7 @@
 package com.chinese.jobs.filter;
 
+import com.chinese.jobs.common.CredentialManager;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
@@ -26,10 +28,6 @@ public class Authenticate {
         final String username = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
 
-        // we have fixed the userid and password as admin
-        // call some UserService/LDAP here
-        boolean authenticationStatus = "admin".equals(username)
-                && "admin".equals(password);
-        return authenticationStatus;
+        return CredentialManager.validateUser(username,password);
     }
 }

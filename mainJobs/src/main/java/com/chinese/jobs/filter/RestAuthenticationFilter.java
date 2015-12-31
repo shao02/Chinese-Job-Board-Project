@@ -9,7 +9,7 @@ import java.io.IOException;
  * Created by xu_s on 12/29/15.
  */
 
-public class RestAuthenticationFilter implements javax.servlet.Filter {
+public class RestAuthenticationFilter implements Filter {
     public static final String AUTHENTICATION_HEADER = "Authorization";
 
     @Override
@@ -20,7 +20,6 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
             String authCredentials = httpServletRequest
                     .getHeader(AUTHENTICATION_HEADER);
 
-            // better injected
             Authenticate authenticationService = new Authenticate();
 
             boolean authenticationStatus = authenticationService
