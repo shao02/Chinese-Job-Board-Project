@@ -11,13 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -62,6 +59,22 @@ public class JobController {
 
 			CredentialManager.addUser(user);
 			headers.set(RestAuthenticationFilter.AUTHENTICATION_HEADER,user.convertToCode());
+		}catch (Exception e){
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity(headers,HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/isUser",
+			method = RequestMethod.POST,
+			headers = {"Content-type=application/json"})
+	@ResponseBody
+	public ResponseEntity postIsUserJson(@RequestBody User user) {
+		HttpHeaders headers = new HttpHeaders();
+		try{
+			if(!CredentialManager.validateUser(user))
+				return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			headers.set(RestAuthenticationFilter.AUTHENTICATION_HEADER, user.convertToCode());
 		}catch (Exception e){
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

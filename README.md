@@ -25,3 +25,10 @@ curl -k -v -X POST -H 'Accept: application/json' -H 'Content-Type: application/j
 "password": "lalee",
 "userId": "laji"
 }' http://localhost:8080/chinese_jobs_board/rest/createUser
+
+Call 5 - Login Call:</br>
+<b>http://localhost:8080/chinese_jobs_board/rest/isUser</b> <br>
+curl -k -v -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' --data '{
+"password": "lalee",
+"userId": "laji"
+}' http://localhost:8080/chinese_jobs_board/rest/isUser

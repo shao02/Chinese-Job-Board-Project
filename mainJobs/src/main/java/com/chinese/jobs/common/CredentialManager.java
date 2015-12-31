@@ -28,8 +28,9 @@ public class CredentialManager {
         allUsers.put(user.getUserId(),user);
     }
 
-    static public boolean validateUser(String user,String password){
-        return (isUserNameUsed(user) && allUsers.get(user).getPassword().equals(password));
+    static public boolean validateUser(User user){
+        return (isUserNameUsed(user.getUserId()) && allUsers.get(user.getUserId()).
+                                                            getPassword().equals(user.getPassword()));
     }
 
     static public void deleteUser(User user){

@@ -1,6 +1,7 @@
 package com.chinese.jobs.filter;
 
 import com.chinese.jobs.common.CredentialManager;
+import com.chinese.jobs.model.User;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -28,6 +29,6 @@ public class Authenticate {
         final String username = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
 
-        return CredentialManager.validateUser(username,password);
+        return CredentialManager.validateUser(new User(username,password));
     }
 }
