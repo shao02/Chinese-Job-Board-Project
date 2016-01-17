@@ -1,43 +1,77 @@
 package com.chinese.jobs.model;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
+import java.util.List;
 
-/**
- * Created by xu_s on 12/30/15.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="USER")
 public class User {
-    private String password;
-    private String userId;
 
-    public String getPassword() {
-        return password;
-    }
+    @Id
+    @GeneratedValue
+    @Column(name="user_id")
+    private Long userId;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @Column(name="user_account_name")
+    private String userAccountName;
 
-    public String getUserId() {
+    @Column(name="user_account_password")
+    private String userAccountPassword;
+
+    @OneToMany(mappedBy="jobUser")
+    private List<Job> jobs;
+
+    @OneToMany(mappedBy="user")
+    private List<UserToken> tokens;
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public User(){
+    public String getUserAccountName() {
+        return userAccountName;
     }
 
-    public User(String user_Id,String password) {
-        this.password = password;
-        this.userId = user_Id;
+    public void setUserAccountName(String userAccountName) {
+        this.userAccountName = userAccountName;
     }
 
-    public String convertToCode() throws UnsupportedEncodingException {
-        String userIdPassword = userId + ":"+password;
-        String userIdPasswordbase64encodedString = Base64.getEncoder()
-                .encodeToString(userIdPassword.getBytes("utf-8"));
-        return "Basic "+ userIdPasswordbase64encodedString;
+    public String getUserAccountPassword() {
+        return userAccountPassword;
+    }
+
+    public void setUserAccountPassword(String userAccountPassword) {
+        this.userAccountPassword = userAccountPassword;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public List<UserToken> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<UserToken> tokens) {
+        this.tokens = tokens;
+    }
+
+    public User(String userAccountPassword, String userAccountName) {
+        this.userAccountPassword = userAccountPassword;
+        this.userAccountName = userAccountName;
     }
 }

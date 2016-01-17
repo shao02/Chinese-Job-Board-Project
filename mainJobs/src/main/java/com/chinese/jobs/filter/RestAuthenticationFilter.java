@@ -20,14 +20,14 @@ public class RestAuthenticationFilter implements Filter {
             String authCredentials = httpServletRequest
                     .getHeader(AUTHENTICATION_HEADER);
 
-            Authenticate authenticationService = new Authenticate();
-
-            boolean authenticationStatus = authenticationService
+            boolean authenticationStatus = Authenticate
                     .authentication(authCredentials);
 
             if (authenticationStatus) {
                 filter.doFilter(request, response);
-            } else {
+            }
+
+            else {
                 if (response instanceof HttpServletResponse) {
                     HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                     httpServletResponse

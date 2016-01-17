@@ -18,19 +18,15 @@ public class CredentialManager {
         }
     }
 
-    static public boolean isUserNameUsed(String userName){
-       return allUsers.containsKey(userName.trim().toLowerCase());
-    }
-
     static public void addUser(User user) throws Exception{
-        if(isUserNameUsed(user.getUserId()))
+        if(isUserNameUsed(user.getUserAccountName()))
             throw new Exception();
-        allUsers.put(user.getUserId(),user);
+        allUsers.put(user.getUserAccountName(),user);
     }
 
     static public boolean validateUser(User user){
-        return (isUserNameUsed(user.getUserId()) && allUsers.get(user.getUserId()).
-                                                            getPassword().equals(user.getPassword()));
+        return (isUserNameUsed(user.getUserAccountName()) && allUsers.get(user.getUserId()).getUserAccountPassword()
+                                                                        .equals(user.getUserAccountPassword()));
     }
 
     static public void deleteUser(User user){

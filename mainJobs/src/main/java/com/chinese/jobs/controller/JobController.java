@@ -2,11 +2,13 @@ package com.chinese.jobs.controller;
 
 import com.chinese.jobs.common.CredentialManager;
 import com.chinese.jobs.common.JobsManager;
+import com.chinese.jobs.filter.Authenticate;
 import com.chinese.jobs.filter.RestAuthenticationFilter;
 import com.chinese.jobs.model.User;
 import com.chinese.jobs.view.JobPostView;
 import com.chinese.jobs.view.JobView;
 import com.chinese.jobs.view.JobsLoadView;
+import com.chinese.persistence.dbUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +44,19 @@ public class JobController {
 					method = RequestMethod.POST,
 					headers = {"Content-type=application/json"})
 	@ResponseBody
-	public ResponseEntity postJobDetailJSON(@RequestBody JobPostView job) throws ParseException {
-		jobsLoader.addSingleJob(job);
+	public ResponseEntity postJobDetailJSON(@RequestBody JobPostView job,@RequestHeader(value="Authorization") String auth) throws ParseException {
+		String user = Authenticate.getUser(auth);
+		jobsLoader.addSingleJob(user, job);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/job/modifyJob",
+			method = RequestMethod.POST,
+			headers = {"Content-type=application/json"})
+	@ResponseBody
+	public ResponseEntity modifyJobDetailJSON(@RequestBody JobPostView job,@RequestHeader(value="Authorization") String auth) throws ParseException {
+		String user = Authenticate.getUser(auth);
+		jobsLoader.addSingleJob(user,job);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
@@ -54,10 +67,10 @@ public class JobController {
 	public ResponseEntity postCreateUserIdJson(@RequestBody User user) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		try{
-			if(CredentialManager.isUserNameUsed(user.getUserId()))
+			if(dbUtil.isUserNameUsed(user.getUserAccountName()))
 				return new ResponseEntity(HttpStatus.IM_USED);
 
-			CredentialManager.addUser(user);
+			JobsManager.addSingleUser(user);
 			headers.set(RestAuthenticationFilter.AUTHENTICATION_HEADER,user.convertToCode());
 		}catch (Exception e){
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

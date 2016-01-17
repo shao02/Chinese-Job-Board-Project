@@ -1,9 +1,11 @@
 package com.chinese.jobs.common;
 
 import com.chinese.jobs.model.Job;
+import com.chinese.jobs.model.User;
 import com.chinese.jobs.view.JobPostView;
 import com.chinese.jobs.view.JobView;
 import com.chinese.jobs.view.JobsLoadView;
+import com.chinese.persistence.dbUtil;
 
 import java.text.ParseException;
 import java.util.*;
@@ -16,18 +18,16 @@ public class JobsManager {
     //For now use hard coded data.
     private final List<Job> allJobs = new ArrayList<Job>();
     private final List<JobsLoadView> jobsLoadViews = new ArrayList<JobsLoadView>();
-    private final Map<String,JobView> jobMapper = new HashMap<String, JobView>();
+    private final Map<Long,JobView> jobMapper = new HashMap<Long, JobView>();
+    private final Map<Long,List<Job>> userJobMapper = new HashMap<Long, List<Job>>();
     public JobsManager(){
-        allJobs.add(new Job("餐馆厨师一名", Calendar.getInstance().getTime(),"Job1@gmail.com","Job1 details","NYC",UUID.randomUUID().toString()));
-        allJobs.add(new Job("急需家务员", Calendar.getInstance().getTime(),"Job2@gmail.com","Job2 details","NYC",UUID.randomUUID().toString()));
-        allJobs.add(new Job("家教若干",Calendar.getInstance().getTime(),"Job3@gmail.com","Job3 details","NYC",UUID.randomUUID().toString()));
-        allJobs.add(new Job("洗碗员",Calendar.getInstance().getTime(),"Job4@gmail.com","Job4 details","NYC",UUID.randomUUID().toString()));
-        allJobs.add(new Job("唐人街司机",Calendar.getInstance().getTime(),"Job5@gmail.com","Job5 details","NYC",UUID.randomUUID().toString()));
-
-        for(Job cur : allJobs){
-            jobsLoadViews.add(new JobsLoadView(cur));
-            jobMapper.put(cur.getId(), new JobView(cur));
-        }
+        User admin = new User("admin","abc");
+        dbUtil.addDBObject(admin);
+        dbUtil.addDBObject(new Job("餐馆厨师一名", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "Job1@gmail.com", "Job1 details", "NYC", admin));
+        dbUtil.addDBObject(new Job("急需家务员", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "Job2@gmail.com", "Job2 details", "NYC", admin));
+        dbUtil.addDBObject(new Job("家教若干", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "Job3@gmail.com", "Job3 details", "NYC", admin));
+        dbUtil.addDBObject(new Job("洗碗员", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "Job4@gmail.com", "Job4 details", "NYC", admin));
+        dbUtil.addDBObject(new Job("唐人街司机", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "Job5@gmail.com", "Job5 details", "NYC", admin));
      }
 
     public List<JobsLoadView> getAllJobs() {
@@ -38,10 +38,13 @@ public class JobsManager {
         return jobMapper.get(id);
     }
 
-    public void addSingleJob(JobPostView cur) throws ParseException {
-        Job curJob = new Job(cur.getJobName(), cur.convertToDate(),cur.getContact(),cur.getDetails(),cur.getLocation(),UUID.randomUUID().toString());
-        allJobs.add(curJob);
-        jobsLoadViews.add(new JobsLoadView(curJob));
-        jobMapper.put(curJob.getId(), new JobView(curJob));
+    public void addSingleJob(long userId,JobPostView cur) throws ParseException {
+        User curUser = dbUtil.loadUser(userId);
+        Job curJob = new Job(cur.getJobName(), new java.sql.Date(cur.convertToDate().getTime()),cur.getContact(),cur.getDetails(),cur.getLocation(),curUser);
+        dbUtil.addDBObject(curJob);
+    }
+
+    static public void addSingleUser(User user){
+        dbUtil.addDBObject(user);
     }
 }

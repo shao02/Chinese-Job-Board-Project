@@ -22,7 +22,7 @@ public class JobsLoadView {
     }
 
     public String getDatePost() {
-        return dateFormat.format(myJob.getDatePost());
+        return dateFormat.format(myJob.getPostDate());
     }
 
     public String getContact() {
@@ -34,6 +34,6 @@ public class JobsLoadView {
     }
 
     public String getId() {
-        return myJob.getId();
+        return myJob.getJobId().toString();
     }
 }
