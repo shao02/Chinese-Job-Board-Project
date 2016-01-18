@@ -1,7 +1,10 @@
 package com.chinese.jobs.common;
 
+import com.chinese.jobs.model.Job;
 import com.chinese.jobs.model.User;
+import com.chinese.persistence.dbUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,23 +22,27 @@ public class CredentialManager {
     }
 
     static public void addUser(User user) throws Exception{
-        if(isUserNameUsed(user.getUserAccountName()))
+        if(dbUtil.isUserNameUsed(user.getUserAccountName()))
             throw new Exception();
-        allUsers.put(user.getUserAccountName(),user);
+        dbUtil.addDBObject(user);
     }
 
     static public boolean validateUser(User user){
-        return (isUserNameUsed(user.getUserAccountName()) && allUsers.get(user.getUserId()).getUserAccountPassword()
-                                                                        .equals(user.getUserAccountPassword()));
+        return dbUtil.isUserNameUsed(user.getUserAccountName());
     }
 
-    static public void deleteUser(User user){
-        allUsers.remove(user.getUserId());
+    static public void deleteUser(long userId){
+        dbUtil.deleteUser(userId);
     }
 
-    static public void updatePassword(String userId,String password) throws Exception{
-        if(!isUserNameUsed(userId))
-            throw new Exception();
-        allUsers.put(userId,new User(userId,password));
+    static public void updatePassword(long userId,String password) throws Exception{
+        User cur = dbUtil.loadUser(userId);
+        cur.setUserAccountPassword(password);
+        dbUtil.updateDBObject(cur);
     }
+
+    static public List<Job> loadJobs(long userId){
+        return dbUtil.loadJobForUser(userId);
+    }
+
 }

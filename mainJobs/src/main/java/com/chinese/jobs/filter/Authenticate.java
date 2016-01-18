@@ -6,11 +6,15 @@ import com.chinese.jobs.model.User;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.StringTokenizer;
-
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+import java.security.Key;
 /**
  * Created by xu_s on 12/30/15.
  */
 public class Authenticate {
+    static public final Key key = MacProvider.generateKey();
     static public String getUser(String auth){
         final String encodedUserPassword = auth.replaceFirst("Basic ", "");
         String usernameAndPassword = null;

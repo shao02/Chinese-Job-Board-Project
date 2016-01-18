@@ -5,6 +5,7 @@ import com.chinese.jobs.common.JobsManager;
 import com.chinese.jobs.filter.Authenticate;
 import com.chinese.jobs.filter.RestAuthenticationFilter;
 import com.chinese.jobs.model.User;
+import com.chinese.jobs.model.UserToken;
 import com.chinese.jobs.view.JobPostView;
 import com.chinese.jobs.view.JobView;
 import com.chinese.jobs.view.JobsLoadView;
@@ -69,8 +70,8 @@ public class JobController {
 		try{
 			if(dbUtil.isUserNameUsed(user.getUserAccountName()))
 				return new ResponseEntity(HttpStatus.IM_USED);
-
 			JobsManager.addSingleUser(user);
+			UserToken token = JobsManager.getUserToke(user);
 			headers.set(RestAuthenticationFilter.AUTHENTICATION_HEADER,user.convertToCode());
 		}catch (Exception e){
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

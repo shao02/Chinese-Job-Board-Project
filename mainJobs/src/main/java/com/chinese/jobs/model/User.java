@@ -2,12 +2,7 @@ package com.chinese.jobs.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="USER")
@@ -24,10 +19,10 @@ public class User {
     @Column(name="user_account_password")
     private String userAccountPassword;
 
-    @OneToMany(mappedBy="jobUser")
+    @OneToMany(mappedBy="jobUser", cascade = CascadeType.REMOVE)
     private List<Job> jobs;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
     private List<UserToken> tokens;
 
     public Long getUserId() {
@@ -74,4 +69,6 @@ public class User {
         this.userAccountPassword = userAccountPassword;
         this.userAccountName = userAccountName;
     }
+
+    public User(){}
 }

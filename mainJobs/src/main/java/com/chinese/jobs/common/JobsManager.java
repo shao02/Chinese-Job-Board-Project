@@ -2,6 +2,7 @@ package com.chinese.jobs.common;
 
 import com.chinese.jobs.model.Job;
 import com.chinese.jobs.model.User;
+import com.chinese.jobs.model.UserToken;
 import com.chinese.jobs.view.JobPostView;
 import com.chinese.jobs.view.JobView;
 import com.chinese.jobs.view.JobsLoadView;
@@ -46,5 +47,9 @@ public class JobsManager {
 
     static public void addSingleUser(User user){
         dbUtil.addDBObject(user);
+    }
+
+    static public UserToken getUserToke(User user){
+       return dbUtil.getToke(user);
     }
 }

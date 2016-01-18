@@ -1,5 +1,9 @@
 package com.chinese.jobs.model;
 
+import com.chinese.jobs.filter.Authenticate;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 import javax.persistence.*;
 
 /**
@@ -22,6 +26,8 @@ public class UserToken {
         this.user = user;
     }
 
+    public UserToken(){}
+
     public User getUser() {
         return user;
     }
@@ -36,5 +42,12 @@ public class UserToken {
 
     public void setTokenId(Long tokenId) {
         this.tokenId = tokenId;
+    }
+
+    public String getRawUserToken(){
+        return Jwts.builder()
+                   .setPayload("{\"Name\":\"lalee\"UserToken}")
+                   .signWith(SignatureAlgorithm.HS512, Authenticate.key)
+                   .compact();
     }
 }

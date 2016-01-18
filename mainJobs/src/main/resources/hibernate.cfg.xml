@@ -20,6 +20,7 @@
  
  		<mapping class="com.chinese.jobs.model.Job"/>
  		<mapping class="com.chinese.jobs.model.User"/>
+        <mapping class="com.chinese.jobs.model.UserToken"/>
  		 
     </session-factory>
 </hibernate-configuration>

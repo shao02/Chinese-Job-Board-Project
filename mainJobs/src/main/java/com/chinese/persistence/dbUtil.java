@@ -5,6 +5,7 @@ package com.chinese.persistence;
  */
 import com.chinese.jobs.model.Job;
 import com.chinese.jobs.model.User;
+import com.chinese.jobs.model.UserToken;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -67,5 +68,24 @@ public class dbUtil {
         Query query = session.createQuery("from User where userAccountName = :userNam");
         query.setParameter("userNam", userName);
         return query.executeUpdate() == 1;
+    }
+
+    public static void deleteUser(long userId){
+        SessionFactory sf = getSessionFactory();
+        Session session = sf.openSession();
+        User cur = loadUser(userId);
+        session.delete(cur);
+        session.getTransaction().commit();
+    }
+
+    public static UserToken getToke(User user){
+        UserToken token = new UserToken(user);
+        SessionFactory sf = getSessionFactory();
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.save(token);
+        session.getTransaction().commit();
+        session.close();
+        return token;
     }
 }
