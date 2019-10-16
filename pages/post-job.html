@@ -1,0 +1,78 @@
+<div class="container">
+	<h3>Post a new job</h3>
+	
+<form class="form-horizontal" ng-submit="post()" novalidate>
+
+	<div class="form-group">
+		<div class="col-xs-6 col-md-4">
+			<label class=" control-label">Title</label>
+			<input type="text" class="form-control" id="inputTitle" placeholder="Job Title, Position" ng-model="postTitle">
+    	</div>
+
+    	<div class="col-xs-6 col-md-4">
+    		<label class=" control-label">Category</label>
+      		<div class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:160px">
+			    Select a category...
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li><a href="#">Food Service</a></li>
+			    <li><a href="#">&nbsp;&nbsp;&nbsp;Cook</a></li>
+			    <li><a href="#">&nbsp;&nbsp;&nbsp;Waiter</a></li>
+			    <li><a href="#">Technology</a></li>
+			    <li><a href="#">Finance</a></li>
+			    <li><a href="#">Education</a></li>
+			  </ul>
+			</div>
+    	</div>
+
+    	<div class="col-xs-6 col-md-4">
+			<label class=" control-label">Type</label>
+      		<div class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:160px">
+			    Full-Time
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+			    <li><a href="#">Part-Time</a></li>
+			    <li><a href="#">Internship</a></li>
+			    <li><a href="#">Freelance</a></li>
+			    <li><a href="#">Temporary</a></li>
+			    <li role="separator" class="divider"></li>
+			    <li><a href="#">Employee's choice</a></li>
+			  </ul>
+			</div>
+    	</div>
+    </div>
+
+    <div class="form-group">
+    	<div class="col-xs-6 col-md-4">
+			<label class=" control-label">Location</label>
+			<input type="text" class="form-control" id="inputLocation" placeholder="i.e. New York, NY" ng-model="postLocation">
+    	</div>
+
+    	<div class="col-xs-6 col-md-4">	
+    		<label class=" control-label">Contact Email</label>
+    		<input type="email" class="form-control" placeholder="UserEmail@domain.com" title="Email" ng-model="postEmail" required/>
+    	</div>
+
+    	<div class="col-xs-6 col-md-4">
+			<label class=" control-label">Salary</label>
+			<div class="">
+	      		<input type="text" class="form-control" id="inputSalary" placeholder="">
+	    	</div>
+    	</div>
+    </div>
+
+	<div class="form-group">
+    	<div class="col-xs-12 col-sm-12 col-md-10">
+			<label class=" control-label">Description</label>
+			<textarea class="form-control" rows="10" placeholder="Please give details about the company, the position, job requirements, etc." ng-model="postDescription"></textarea>
+    	</div>
+    </div>
+	
+	<button type="submit" class="btn btn-primary btn-lg pull-left">Post job</button>
+
+</form>
+</div><br><br>	
